@@ -1,7 +1,7 @@
 <?php
 /*
-  Plugin Name: Dialogue layout
-  description: Make ショートコードで人物画像を指定して、会話風のコンテンツを表示します。
+  Plugin Name: Dialogue Layout
+  description: An easy way to make conversation layout with avatars in post contents.
   Author: Mayo Moriyama
   Version: 0.1
   Author URI: http://blog.mayuko.me
@@ -24,7 +24,7 @@ add_action( 'init', function() {
     $a = shortcode_atts( array(
         'img'    => '',
         'img_id' => '',
-        'alt'    => _('セリフ:'),
+        'alt'    => __( 'Speaker: ', 'dialogue-layout' ),
     ), $atts );
 
     if ( !empty( $a['img_id'] ) )
@@ -59,39 +59,34 @@ add_action( 'init', function() {
 
   if ( function_exists( 'shortcode_ui_register_for_shortcode' ) ) :
       shortcode_ui_register_for_shortcode(
-          'dialogue',
-          array(
-
-              // Display label. String. Required.
-              'label' => 'Dialogue',
-
-              // Icon/image for shortcode. Optional. src or dashicons-$icon. Defaults to carrot.
-              'listItemImage' => 'dashicons-format-chat',
-
-              // Available shortcode attributes and default values. Required. Array.
-              // Attribute model expects 'attr', 'type' and 'label'
-              // Supported field types: text, checkbox, textarea, radio, select, email, url, number, and date.
-              'attrs' => array(
-                  array(
-                      'label' => 'Face',
-                      'attr'  => 'img',
-                      'type'  => 'url',
-                  ),
-                  array(
-                      'label' => 'Face',
-                      'attr'  => 'img_id',
-                      'type'  => 'attachment',
-                  ),
-                  array(
-                      'label' => 'Speaker Name',
-                      'attr'  => 'alt',
-                      'type'  => 'text',
-                  ),
+        'dialogue',
+        array(
+          'label' => __( 'Dialogue', 'dialogue-layout' ),
+          'listItemImage' => 'dashicons-format-chat',
+          'attrs' => array(
+            array(
+              'label' => __( 'Avatar image URL' , 'dialogue-layout' ),
+              'attr'  => 'img',
+              'type'  => 'url',
+            ),
+            array(
+              'label' => __( 'Avatar image' , 'dialogue-layout' ),
+              'attr'  => 'img_id',
+              'type'  => 'attachment',
+            ),
+            array(
+              'label' => __( 'Speaker Name' , 'dialogue-layout' ),
+              'attr'  => 'alt',
+              'type'  => 'text',
+              'meta'   => array(
+                'placeholder' => esc_html__( 'Speaker :', 'dialogue-layout' ),
               ),
-              'inner_content' => array(
-                'label' => 'Content',
-              ),
-          )
+            ),
+          ),
+          'inner_content' => array(
+            'label' => 'Content',
+          ),
+        )
       );
   endif;
 
