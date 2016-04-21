@@ -8,6 +8,9 @@
   Text Domain: dialogue-layout
 */
 
+add_action( 'plugins_loaded', function () { load_plugin_textdomain( 'dialogue-layout', false, dirname( plugin_basename( __FILE__ ) ).'/language' ); } );
+
+
 function dialogue_layout_style( $mce_css ){
   if ( !empty( $mce_css ) )
   $mce_css .= ',';
@@ -24,7 +27,7 @@ add_action( 'init', function() {
     $a = shortcode_atts( array(
         'img'    => '',
         'img_id' => '',
-        'alt'    => __( 'Speaker: ', 'dialogue-layout' ),
+        'alt'    => __( 'Speaker:', 'dialogue-layout' ),
     ), $atts );
 
     if ( !empty( $a['img_id'] ) )
@@ -65,7 +68,7 @@ add_action( 'init', function() {
           'listItemImage' => 'dashicons-format-chat',
           'attrs' => array(
             array(
-              'label' => __( 'Avatar image URL' , 'dialogue-layout' ),
+              'label' => __( 'Avatar image URL' , 'dialogue-layout' ).__( 'This will be overritten by avatar image setting.' , 'dialogue-layout' ),
               'attr'  => 'img',
               'type'  => 'url',
             ),
@@ -79,12 +82,12 @@ add_action( 'init', function() {
               'attr'  => 'alt',
               'type'  => 'text',
               'meta'   => array(
-                'placeholder' => esc_html__( 'Speaker :', 'dialogue-layout' ),
+                'placeholder' => esc_html__( 'Speaker:', 'dialogue-layout' ),
               ),
             ),
           ),
           'inner_content' => array(
-            'label' => 'Content',
+            'label' => esc_html__( 'Content', 'dialogue-layout' ),
           ),
         )
       );
