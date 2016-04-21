@@ -46,7 +46,7 @@ add_action( 'init', function() {
     }
 
     $image = sprintf(
-      '<span class="speaker"><img src="%1$s" alt="%2$s"></span>',
+      '<span class="speaker" style="background-image:url(%1$s)"><span class="screen-reader-text">%2$s</span></span>',
       $img,
       $a['alt']
     );
@@ -68,7 +68,7 @@ add_action( 'init', function() {
           'listItemImage' => 'dashicons-format-chat',
           'attrs' => array(
             array(
-              'label' => __( 'Avatar image URL' , 'dialogue-layout' ).__( 'This will be overritten by avatar image setting.' , 'dialogue-layout' ),
+              'label' => __( 'Avatar image URL' , 'dialogue-layout' ).' '.__( '*This will be overritten by avatar image setting.' , 'dialogue-layout' ),
               'attr'  => 'img',
               'type'  => 'url',
             ),
@@ -96,6 +96,10 @@ add_action( 'init', function() {
 } );
 
 add_action( 'wp_enqueue_scripts', function() {
+  wp_enqueue_style(
+		'dialogue-layout-style',
+		plugins_url( 'dialogue-layout.css', __FILE__ )
+	);
   $css = "
   .dialogue-layout {
     position: relative;
@@ -107,11 +111,10 @@ add_action( 'wp_enqueue_scripts', function() {
       bottom: 0;
       left: 0;
       width: 90px;
-      height: 90px; }
-      .dialogue-layout .speaker img {
-        min-height: 100%;
-        min-width: 100%;
-        border-radius: 100%; }
+      height: 90px;
+      background-position: center center;
+      background-size: cover;
+      border-radius: 100%; }
     .dialogue-layout .speech {
       display: table-cell;
       margin: 0;
